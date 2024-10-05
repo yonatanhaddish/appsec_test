@@ -1,0 +1,39 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [main]
+  schedule:
+    - cron: "0 0 * * 3" # Runs every Wednesday at midnight
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["cpp"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+
+      # Custom build step to compile the C code using gcc
+      - name: Install dependencies (gcc)
+        run: sudo apt-get install -y gcc # Install gcc on the GitHub runner
+
+      - name: Build the code
+        run: gcc -o main sample.c # Custom build command to compile sample.c
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
