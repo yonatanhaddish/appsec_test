@@ -13,9 +13,9 @@ app.post("/register", (req, res) => {
   const { username } = req.body;
 
   // No proper validation on username
-  users.push(username); // Vulnerable to injection attacks
-  res.send(`User ${username} registered successfully!`);
-  //   res.send("Testing ...");
+  //   users.push(username); // Vulnerable to injection attacks
+  //   res.send(`User ${username} registered successfully!`);
+  res.send("Testing ...");
 });
 
 // Start the server
