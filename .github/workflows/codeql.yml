@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["c"] # Specify C language for the scan
+        language: ["javascript"] # Specify C language for the scan
 
     steps:
       - name: Checkout repository
