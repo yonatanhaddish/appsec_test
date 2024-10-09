@@ -36,7 +36,6 @@ jobs:
       - name: Autobuild
         run: |
           npm install
-          npm run build  # Adjust this step to match how you build your project, if necessary
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
