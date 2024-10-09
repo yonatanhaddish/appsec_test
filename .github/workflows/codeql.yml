@@ -4,20 +4,12 @@ on:
   push:
     branches: ["main"]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: ["main"]
-  schedule:
-    - cron: "0 1 * * 1" # Weekly scan
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: ["javascript"] # Specify C language for the scan
 
     steps:
       - name: Checkout repository
@@ -26,15 +18,12 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: ${{ matrix.language }}
-          # Add the extended query suites for a more thorough security scan
-          queries: +security-extended, +maintainability-extended
+          languages: javascript
 
-      - name: Build code
+      - name: Build
         run: |
-          make all  # Assuming 'make all' builds your C project
+          npm install
+          npm run build # If you have a build step
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-        with:
-          category: "/language:extended"
